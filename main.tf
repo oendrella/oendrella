@@ -1,6 +1,10 @@
 provider "aws" {
     region = "us-east-1"
 }
+import {
+  to = aws_key_pair.deployer
+  id = "eks4"  # This must match the name exactly as it appears in the AWS Console
+}
 resource "aws_key_pair" "deployer" {
   key_name   = "eks4"
   public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key
@@ -65,4 +69,5 @@ output "public_ip" {
   value = aws_instance.test.public_ip
   description = "Public IP of the Python application server"
 }
+
 
