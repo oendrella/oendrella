@@ -3,7 +3,8 @@ provider "aws" {
 }
 resource "aws_key_pair" "deployer" {
   key_name   = "eks"
-  public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key
+  ##public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key
+  public_key = file("D:/Interview_Project/AWS_EKS/Project2/id_rsa.pub")
 }
 
 resource "aws_security_group" "allow_http_ssh" {
@@ -64,4 +65,3 @@ output "public_ip" {
   value = aws_instance.test.public_ip
   description = "Public IP of the Python application server"
 }
-
