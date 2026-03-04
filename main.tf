@@ -64,11 +64,22 @@ resource "aws_instance" "test" {
     Name = "PythonAppServer"
   }
 }
+terraform {
+    backend "s3" {
+         bucket = "terraformbucket2398"
+         key = "terraform.tfstate"
+         region = "us-east-1"
+         skip_region_validation      = true
+         skip_credentials_validation = true
+         skip_metadata_api_check     = true
+}
+}
 
 output "public_ip" {
   value = aws_instance.test.public_ip
   description = "Public IP of the Python application server"
 }
+
 
 
 
