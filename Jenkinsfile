@@ -5,6 +5,11 @@ pipeline {
         ECR_REPO   = '388370472854.dkr.ecr.us-east-1.amazonaws.com/nginx-app'
     }
     stages {
+        stage('Test') {
+            steps {
+                echo "Hello from Jenkins pipeline"
+            }
+        }
         stage('Terraform Apply') {
             steps {
                 dir('terraform') {
