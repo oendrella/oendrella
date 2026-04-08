@@ -15,7 +15,7 @@ pipeline {
             steps {
                 // Example: run Kaniko in EKS pod or CodeBuild
                 sh '''
-                kubectl apply -f kaniko-job.yaml
+                kubectl apply -f kaniko.yaml
                 '''
             }
         }
