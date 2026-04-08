@@ -1,21 +1,31 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: kaniko-build
+  name: nginx-app
 spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-app
   template:
+    metadata:
+      labels:
+        app: nginx-app
     spec:
       containers:
-      - name: kaniko
-        image: gcr.io/kaniko-project/executor:latest
-        args:
-          - "--dockerfile=/workspace/Dockerfile"
-          - "--context=/workspace/"
-          - "--destination=388370472854.dkr.ecr.us-east-1.amazonaws.com/my-app:latest"
-        volumeMounts:
-          - name: workspace
-            mountPath: /workspace
-      restartPolicy: Never
-      volumes:
-        - name: workspace
-          emptyDir: {}
+      - name: nginx
+        image: 388370472854.dkr.ecr.us-east-1.amazonaws.com/nginx-app:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
